@@ -24,5 +24,18 @@ namespace ZIF_data_recovery
         {
             InitializeComponent();
         }
+
+        public void LoadFileClick(object sender, RoutedEventArgs e)
+        {
+            // load file
+            // Add status: file X loaded in Status Textbox
+        }
+
+        public void ResetBoardClick(object sender, RoutedEventArgs e)
+        {
+            // Reset Bitmap Drawingboard
+            // Reset Loaded Files
+            // Reset Status Textbox
+        }
     }
 }
