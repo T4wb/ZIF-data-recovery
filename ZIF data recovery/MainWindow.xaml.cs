@@ -33,17 +33,16 @@ namespace ZIF_data_recovery
         {
             if (_documentManager.OpenDocument())
             {
-                // verander status.Text
-                // Toon afbeelding:
+                // Add status: File X loaded in Status Textbox: misschien een andere type control gebruiken?
                 RecoverDocument();
+
+                // Toon afbeelding:
             }
             else
             {
                 // verander Status.Text in bestand niet geladen
                 MessageBox.Show("Ouch... I couldn't load the file. Is it in use or did you close the previous window?");
             }
-            // Load file
-            // Add status: File X loaded in Status Textbox: misschien een andere type control gebruiken?
         }
 
         private void ResetBoardClick(object sender, RoutedEventArgs e)
@@ -56,13 +55,9 @@ namespace ZIF_data_recovery
         private void RecoverDocument()
         {
             // To Do: RecoverDocument
-            if (_documentManager.RecoverDocument())
+            if (!_documentManager.RecoverDocument())
             {
-                // return true;
-            }
-            else
-            {
-                // return false;
+                MessageBox.Show("Ouch... I couldn't load the file. Is it in use or did you close the previous window?");
             }
         }
     }
