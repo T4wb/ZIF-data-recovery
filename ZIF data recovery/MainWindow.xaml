@@ -8,8 +8,8 @@
         Title="MainWindow" Height="150" Width="300"
         ResizeMode="CanMinimize">
     <Grid>
-        <Button x:Name="LoadFile" Content="Load File" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,10,0,0" Height="24" Click="LoadFileClick"/>
+        <Button x:Name="LoadFile" Content="Load File" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,10,0,0" Height="24" Click="OpenDocument"/>
         <Button x:Name="ResetBoard" Content="Reset" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,71,0,0" Height="24" Click="ResetBoardClick"/>
-        <TextBox x:Name="Status" HorizontalAlignment="Left" Height="85" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="165" Margin="105,10,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>
+        <TextBox x:Name="Status" HorizontalAlignment="Left" Height="85" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="165" Margin="105,10,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
     </Grid>
 </Window>

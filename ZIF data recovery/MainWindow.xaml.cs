@@ -20,22 +20,50 @@ namespace ZIF_data_recovery
     /// </summary>
     public partial class MainWindow : Window
     {
+        //
+        private DocumentManager _documentManager;
+        
         public MainWindow()
         {
             InitializeComponent();
+            _documentManager = new DocumentManager();
         }
 
-        public void LoadFileClick(object sender, RoutedEventArgs e)
+        private void OpenDocument(object sender, RoutedEventArgs e)
         {
-            // load file
-            // Add status: file X loaded in Status Textbox
+            if (_documentManager.OpenDocument())
+            {
+                // verander status.Text
+                // Toon afbeelding:
+                RecoverDocument();
+            }
+            else
+            {
+                // verander Status.Text in bestand niet geladen
+                MessageBox.Show("Ouch... I couldn't load the file. Is it in use or did you close the previous window?");
+            }
+            // Load file
+            // Add status: File X loaded in Status Textbox: misschien een andere type control gebruiken?
         }
 
-        public void ResetBoardClick(object sender, RoutedEventArgs e)
+        private void ResetBoardClick(object sender, RoutedEventArgs e)
         {
             // Reset Bitmap Drawingboard
             // Reset Loaded Files
             // Reset Status Textbox
+        }
+
+        private void RecoverDocument()
+        {
+            // To Do: RecoverDocument
+            if (_documentManager.RecoverDocument())
+            {
+                // return true;
+            }
+            else
+            {
+                // return false;
+            }
         }
     }
 }
