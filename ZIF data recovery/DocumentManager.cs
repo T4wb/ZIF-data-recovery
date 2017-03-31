@@ -13,11 +13,12 @@ namespace ZIF_data_recovery
         //variables
         private string _currentFile;
 
-        private List<FileBinary> _fileBinary;
+        private List<byte[]> _fileBinary; // testing
 
         public DocumentManager()
         {
-            _fileBinary = new List<FileBinary>();
+            //_fileBinary = new List<FileBinary>();
+            _fileBinary = new List<byte[]>(); // testing
         }
 
         /// <summary>
@@ -41,7 +42,8 @@ namespace ZIF_data_recovery
                     BinaryReader br = new BinaryReader(stream);
 
                     // add to fileList
-                    _fileBinary.Add(new FileBinary(br.ReadBytes((int)stream.Length)));
+                    _fileBinary.Clear(); // testing
+                    _fileBinary.Add(br.ReadBytes((int)stream.Length)); // testing
                 }
                 return true;
             }
@@ -50,8 +52,40 @@ namespace ZIF_data_recovery
 
         public bool RecoverDocument()
         {
+            // To Do: Start this from AFTER DATA-SIZE
+
             // fancy stuff
+            int width = 800; // To Do: read from file.
+            int height = 600; // To Do: read from file.
+            byte[] tempBytes = new byte[4];
+
+            // Read bytes
+            for (int Ycount = 0; Ycount < height; Ycount++)
+            {
+                for (int Xcount = 0; Xcount < width; Xcount++)
+                {
+                    tempBytes[Xcount % 3] = _fileBinary[0][];
+
+                    if (Xcount != 0 && Xcount % 3 == 0)
+                    {
+                        // controleer of gelijk is aan 0? Zo niet dan teken zwarte pixel
+                        if (BitConverter.ToInt32(tempBytes, 0) != 0)
+                        {
+                            DrawPixel(); // To Do
+                        }
+                    }
+                  
+                }
+            }
+
+            // raw bitmap
+
             return true; // testing
+        }
+
+        private void DrawPixel()
+        {
+
         }
     }
 }
