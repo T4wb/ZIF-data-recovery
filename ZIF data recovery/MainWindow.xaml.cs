@@ -30,6 +30,7 @@ namespace ZIF_data_recovery
             InitializeComponent();
             _documentManager = new DocumentManager();
             drawingWindow = new DrawingWindow();
+            drawingWindow.Show();
         }
 
         private void OpenDocument(object sender, RoutedEventArgs e)
@@ -37,8 +38,7 @@ namespace ZIF_data_recovery
             if (_documentManager.OpenDocument())
             {
                 // Add status: File X loaded in Status Textbox: misschien een andere type control gebruiken?
-                drawingWindow.Show();
-
+                
                 // Toon afbeelding:
                 RecoverDocument();
                 drawingWindow.SetDrawing();

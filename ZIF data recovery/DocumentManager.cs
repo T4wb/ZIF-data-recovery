@@ -74,7 +74,12 @@ namespace ZIF_data_recovery
                     // check
                     if (BitConverter.ToInt32(bytesPixel, 0) != 0)
                     {
-                        DrawPixel(Xcount, Ycount);
+                        // SetPixel(Black)
+                    }
+                    else
+                    {
+                        // SetPixel(White)
+                        
                     }
 
                     // x,y coordinate of pixel
