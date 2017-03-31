@@ -13,18 +13,23 @@ namespace ZIF_data_recovery
         //variables
         private string _currentFile;
 
-        private List<byte[]> _fileBinary; // testing
+        private FileBinary fileBinary;
 
         public DocumentManager()
         {
-            //_fileBinary = new List<FileBinary>();
-            _fileBinary = new List<byte[]>(); // testing
+            // create Bitmap
+            createBitmap();
+        }
+
+        private void createBitmap()
+        {
+            // To Do
         }
 
         /// <summary>
-        /// 
+        /// This method opens the ZIF-file.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns a status boolean value of the file opening proces </returns>
         public bool OpenDocument()
         {
             OpenFileDialog dlg = new OpenFileDialog()
@@ -42,50 +47,55 @@ namespace ZIF_data_recovery
                     BinaryReader br = new BinaryReader(stream);
 
                     // add to fileList
-                    _fileBinary.Clear(); // testing
-                    _fileBinary.Add(br.ReadBytes((int)stream.Length)); // testing
+                    fileBinary = new FileBinary(br.ReadBytes((int)stream.Length));
                 }
+
                 return true;
             }
+
             return false; 
         }
 
         public bool RecoverDocument()
         {
-            // To Do: Start this from AFTER DATA-SIZE
+            // split into 4 bytes // Refactor: shift to FileBinary
+            byte[] bytesPixel = new byte[4]; // Refactor: other data structure as you're Array writing action costs speed!
 
-            // fancy stuff
-            int width = 800; // To Do: read from file.
-            int height = 600; // To Do: read from file.
-            byte[] tempBytes = new byte[4];
+            int count = 0; // Refactor: use i%3 instead 
+            int Xcount = 0; // Refactor: this is i
+            int Ycount = 0;
 
-            // Read bytes
-            for (int Ycount = 0; Ycount < height; Ycount++)
+            for (int i = 0; i < fileBinary.binary[0].Length; i++)
             {
-                for (int Xcount = 0; Xcount < width; Xcount++)
+                bytesPixel[count] = fileBinary.binary[0][i];
+
+                if (i != 0 && i % 4 == 0 )
                 {
-                    tempBytes[Xcount % 3] = _fileBinary[0][];
-
-                    if (Xcount != 0 && Xcount % 3 == 0)
+                    // check
+                    if (BitConverter.ToInt32(bytesPixel, 0) != 0)
                     {
-                        // controleer of gelijk is aan 0? Zo niet dan teken zwarte pixel
-                        if (BitConverter.ToInt32(tempBytes, 0) != 0)
-                        {
-                            DrawPixel(); // To Do
-                        }
+                        DrawPixel(Xcount, Ycount);
                     }
-                  
-                }
-            }
 
-            // raw bitmap
+                    // x,y coordinate of pixel
+                    if (Xcount == 800*4) // Width
+                    {
+                        Ycount++; // May write out of bounce/picture as the max is 600
+                        Xcount = 0;
+                    }
+
+                    // 
+                    count = 0;
+                }
+                Xcount++;
+            }
 
             return true; // testing
         }
 
-        private void DrawPixel()
+        private void DrawPixel(int Xcount, int Ycount) // Refactor: shift to DrawPicture.cs
         {
-
+            // draw Bitmap
         }
     }
 }
