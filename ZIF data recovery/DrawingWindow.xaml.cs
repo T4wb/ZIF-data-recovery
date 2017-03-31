@@ -24,9 +24,21 @@ namespace ZIF_data_recovery
         {
             InitializeComponent();
         }
-        public void SetDrawing()
+        public void SetDrawing(byte[] fileBinary)
         {
-            //image.Source = bitmap;
+
+            var width = 800;
+            var height = 600; 
+            var dpiX = 96d;
+            var dpiY = 96d;
+            var pixelFormat = PixelFormats.Bgra32;
+            var bytesPerPixel = 4;
+            var stride = bytesPerPixel * width;
+
+
+            var bitmap = BitmapSource.Create(width, height, dpiX, dpiY,
+                                             pixelFormat, null, fileBinary, stride);
+            image.Source = bitmap;
             
         }
 

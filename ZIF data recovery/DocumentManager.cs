@@ -17,13 +17,7 @@ namespace ZIF_data_recovery
 
         public DocumentManager()
         {
-            // create Bitmap
-            createBitmap();
-        }
-
-        private void createBitmap()
-        {
-            // To Do
+            // empty
         }
 
         /// <summary>
@@ -58,44 +52,49 @@ namespace ZIF_data_recovery
 
         public bool RecoverDocument()
         {
-            // split into 4 bytes // Refactor: shift to FileBinary
-            byte[] bytesPixel = new byte[4]; // Refactor: other data structure as you're Array writing action costs speed!
+            //// split into 4 bytes // Refactor: shift to FileBinary
+            //byte[] bytesPixel = new byte[4]; // Refactor: other data structure as you're Array writing action costs speed!
 
-            int count = 0; // Refactor: use i%3 instead 
-            int Xcount = 0; // Refactor: this is i
-            int Ycount = 0;
+            //int count = 0; // Refactor: use i%3 instead 
+            //int Xcount = 0; // Refactor: this is i
+            //int Ycount = 0;
 
-            for (int i = 0; i < fileBinary.binary[0].Length; i++)
-            {
-                bytesPixel[count] = fileBinary.binary[0][i];
+            //for (int i = 0; i < fileBinary.binary[0].Length; i++)
+            //{
+            //    bytesPixel[count] = fileBinary.binary[0][i];
 
-                if (i != 0 && i % 4 == 0 )
-                {
-                    // check
-                    if (BitConverter.ToInt32(bytesPixel, 0) != 0)
-                    {
-                        DrawPixel(Xcount, Ycount);
-                    }
+            //    if (i != 0 && i % 4 == 0 )
+            //    {
+            //        // check
+            //        if (BitConverter.ToInt32(bytesPixel, 0) != 0)
+            //        {
+            //            DrawPixel(Xcount, Ycount);
+            //        }
 
-                    // x,y coordinate of pixel
-                    if (Xcount == 800*4) // Width
-                    {
-                        Ycount++; // May write out of bounce/picture as the max is 600
-                        Xcount = 0;
-                    }
+            //        // x,y coordinate of pixel
+            //        if (Xcount == 800*4) // Width
+            //        {
+            //            Ycount++; // May write out of bounce/picture as the max is 600
+            //            Xcount = 0;
+            //        }
 
-                    // 
-                    count = 0;
-                }
-                Xcount++;
-            }
+            //        // 
+            //        count = 0;
+            //    }
+            //    Xcount++;
+            //}
 
             return true; // testing
         }
 
-        private void DrawPixel(int Xcount, int Ycount) // Refactor: shift to DrawPicture.cs
+        //private void DrawPixel(int Xcount, int Ycount) // Refactor: shift to DrawPicture.cs
+        //{
+        //    // draw Bitmap
+        //}
+
+        public byte[] getFileBinary()
         {
-            // draw Bitmap
+            return fileBinary.binary[0];
         }
     }
 }
