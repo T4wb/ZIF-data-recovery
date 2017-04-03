@@ -59,7 +59,7 @@ namespace ZIF_data_recovery
 
         private void RecoverDocument()
         {
-            if (!_documentManager.RecoverDocument())
+            if (!drawingWindow.RecoverDocument(_documentManager.fileBinary))
             {
                 MessageBox.Show("Ouch... I couldn't load the file. Is it in use or did you close the previous window?");
             }

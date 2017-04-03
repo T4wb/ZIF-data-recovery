@@ -47,7 +47,7 @@ namespace ZIF_data_recovery
                 startIndex++;
             }
 
-            binary.Add(bytes.Skip(startIndex).Take((bytes.Length - startIndex)).ToArray()); // neemt alles wat na DATA-Size komt in bytes
+            binary.Add(bytes.Skip(startIndex).Take((bytes.Length - startIndex)).ToArray()); // neemt alles wat na DATA-Size komt in bytes = RAW pixel Data
         }
     }
 }

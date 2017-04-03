@@ -13,7 +13,7 @@ namespace ZIF_data_recovery
         //variables
         private string _currentFile;
 
-        private FileBinary fileBinary;
+        public FileBinary fileBinary { get; set; }
 
         public DocumentManager()
         {
@@ -54,53 +54,6 @@ namespace ZIF_data_recovery
             }
 
             return false; 
-        }
-
-        public bool RecoverDocument()
-        {
-            // split into 4 bytes // Refactor: shift to FileBinary
-            byte[] bytesPixel = new byte[4]; // Refactor: other data structure as you're Array writing action costs speed!
-
-            int count = 0; // Refactor: use i%3 instead 
-            int Xcount = 0; // Refactor: this is i
-            int Ycount = 0;
-
-            for (int i = 0; i < fileBinary.binary[0].Length; i++)
-            {
-                bytesPixel[count] = fileBinary.binary[0][i];
-
-                if (i != 0 && i % 4 == 0 )
-                {
-                    // check
-                    if (BitConverter.ToInt32(bytesPixel, 0) != 0)
-                    {
-                        // SetPixel(Black)
-                    }
-                    else
-                    {
-                        // SetPixel(White)
-                        
-                    }
-
-                    // x,y coordinate of pixel
-                    if (Xcount == 800*4) // Width
-                    {
-                        Ycount++; // May write out of bounce/picture as the max is 600
-                        Xcount = 0;
-                    }
-
-                    // 
-                    count = 0;
-                }
-                Xcount++;
-            }
-
-            return true; // testing
-        }
-
-        private void DrawPixel(int Xcount, int Ycount) // Refactor: shift to DrawPicture.cs
-        {
-            // draw Bitmap
         }
     }
 }
