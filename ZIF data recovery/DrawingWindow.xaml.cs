@@ -73,13 +73,6 @@ namespace ZIF_data_recovery
             return true; // testing
         }
 
-        //private void DrawPixel(int Xcount, int Ycount, Color color) // Refactor: shift to DrawPicture.cs
-        //{
-        //    // draw Bitmap
-
-
-        //}
-
         private void DrawBoard(byte[] pixelData)
         {
             double dpi = 96;
@@ -87,7 +80,7 @@ namespace ZIF_data_recovery
             int height = 600;
 
             BitmapSource bmpSource = BitmapSource.Create(width, height, dpi, dpi,
-                PixelFormats.Gray8, null, pixelData, width);
+                PixelFormats.Bgra32, null, pixelData, width*4);
 
             image.Source = bmpSource;
         }
