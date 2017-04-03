@@ -44,7 +44,8 @@ namespace ZIF_data_recovery
 
             int count = 0;
 
-            int red, green, blue, alpha = 0;
+            int red, green, blue, alpha;
+            red = green = blue = alpha = 0;
 
             for (int i = 0; i < fileBinary.binary[0].Length; i++)
             {
@@ -55,21 +56,16 @@ namespace ZIF_data_recovery
                     // write to bytesPixelEditted
                     if (BitConverter.ToInt32(bytesPixel, 0) != 0)
                     {
-                        // zwart maken = 0
-                        red = 0;
-                        green = 0;
+                        // zwart maken
                         blue = 255;
-                        alpha = 0;
 
                         pixels.Add((uint)((blue << 24) + (green << 16) + (red << 8) + alpha));
                     }
                     else
                     {
-                        // wit maken = 255
-                        red = 0;
-                        green = 0;
+                        // wit maken
                         blue = 0;
-                        alpha = 0;
+
                         pixels.Add((uint)((blue << 24) + (green << 16) + (red << 8) + alpha));
                     }
 
