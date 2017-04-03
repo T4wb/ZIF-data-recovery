@@ -77,6 +77,7 @@ namespace ZIF_data_recovery
                 }
             }
 
+            //
             DrawBoard();
             return true; // testing
         }
@@ -85,6 +86,13 @@ namespace ZIF_data_recovery
         {
             bitmap.WritePixels(new Int32Rect(0, 0, 800, 600), pixels.ToArray(), width * 4, 0);
             image.Source = bitmap;
+        }
+
+        public void resetDrawBoard()
+        {
+            image.Source = null;
+            pixels.Clear();
+            bitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgra32, null);
         }
     }
 }

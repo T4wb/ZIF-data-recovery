@@ -53,8 +53,10 @@ namespace ZIF_data_recovery
         private void ResetBoardClick(object sender, RoutedEventArgs e)
         {
             // Reset Bitmap Drawingboard
+            drawingWindow.resetDrawBoard();
+
             // Reset Loaded Files
-            // Reset Status Textbox
+            Status.Clear();
         }
 
         private void ShowDocument()
