@@ -38,10 +38,9 @@ namespace ZIF_data_recovery
             if (_documentManager.OpenDocument())
             {
                 // Add status: File X loaded in Status Textbox: misschien een andere type control gebruiken?
-                
+
                 // Toon afbeelding:
-                RecoverDocument();
-                drawingWindow.SetDrawing();
+                ShowDocument();
             }
             else
             {
@@ -57,11 +56,11 @@ namespace ZIF_data_recovery
             // Reset Status Textbox
         }
 
-        private void RecoverDocument()
+        private void ShowDocument()
         {
-            if (!_documentManager.RecoverDocument())
+            if (!drawingWindow.SetDrawing(_documentManager.fileBinary))
             {
-                MessageBox.Show("Ouch... I couldn't load the file. Is it in use or did you close the previous window?");
+                MessageBox.Show("Ouch... I couldn't recover the file.");
             }
         }
     }
