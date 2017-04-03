@@ -21,21 +21,30 @@ namespace ZIF_data_recovery
     public partial class DrawingWindow : Window
     {
 
-        //
-        private List<byte> bytesPixelEditted;
+        // variables
+        int width = 800;
+        int height = 600;
+
+        List<uint> pixels;
+        WriteableBitmap bitmap;
 
         public DrawingWindow()
         {
             InitializeComponent();
-            bytesPixelEditted = new List<byte>();
+
+            //
+            pixels = new List<uint>();
+            bitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgra32, null);
         }
 
         public bool SetDrawing(FileBinary fileBinary)
         {
-            // split into 4 bytes // Refactor: shift to FileBinary
+            // 
             byte[] bytesPixel = new byte[4];
 
             int count = 0;
+
+            int red, green, blue, alpha = 0;
 
             for (int i = 0; i < fileBinary.binary[0].Length; i++)
             {
@@ -47,18 +56,21 @@ namespace ZIF_data_recovery
                     if (BitConverter.ToInt32(bytesPixel, 0) != 0)
                     {
                         // zwart maken = 0
-                        for (int j = 0; j < 4; j++)
-                        {
-                            bytesPixelEditted.Add((byte)230);
-                        }
+                        red = 0;
+                        green = 0;
+                        blue = 255;
+                        alpha = 0;
+
+                        pixels.Add((uint)((blue << 24) + (green << 16) + (red << 8) + alpha));
                     }
                     else
                     {
                         // wit maken = 255
-                        for (int j = 0; j < 4; j++)
-                        {
-                            bytesPixelEditted.Add((byte)255);
-                        }
+                        red = 0;
+                        green = 0;
+                        blue = 0;
+                        alpha = 0;
+                        pixels.Add((uint)((blue << 24) + (green << 16) + (red << 8) + alpha));
                     }
 
                     count = 0;
@@ -69,20 +81,14 @@ namespace ZIF_data_recovery
                 }
             }
 
-            DrawBoard(bytesPixelEditted.ToArray<byte>());
+            DrawBoard();
             return true; // testing
         }
 
-        private void DrawBoard(byte[] pixelData)
+        private void DrawBoard()
         {
-            double dpi = 96;
-            int width = 800;
-            int height = 600;
-
-            BitmapSource bmpSource = BitmapSource.Create(width, height, dpi, dpi,
-                PixelFormats.Bgra32, null, pixelData, width*4);
-
-            image.Source = bmpSource;
+            bitmap.WritePixels(new Int32Rect(0, 0, 800, 600), pixels.ToArray(), width * 4, 0);
+            image.Source = bitmap;
         }
     }
 }

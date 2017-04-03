@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZIF_data_recovery"
         mc:Ignorable="d"
-        Title="Drawing Window" ResizeMode="NoResize" Width="1920" Height="1080" >
+        Title="Drawing Window" ResizeMode="NoResize" Width="800" Height="600" >
     <Grid>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="600" Margin="10,10,0,0" VerticalAlignment="Top" Width="800" />
+        <Image x:Name="image" />
     </Grid>
 </Window>

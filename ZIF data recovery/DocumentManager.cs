@@ -11,7 +11,7 @@ namespace ZIF_data_recovery
     public class DocumentManager
     {
         //variables
-        private string _currentFile;
+        public string CurrentFile { get; set; }
 
         public FileBinary fileBinary { get; set; }
 
@@ -39,7 +39,8 @@ namespace ZIF_data_recovery
 
             if (dlg.ShowDialog() == true)
             {
-                _currentFile = dlg.FileName;
+                
+                CurrentFile = Path.GetFileName(dlg.FileName);
 
                 using (Stream stream = dlg.OpenFile())
                 {
