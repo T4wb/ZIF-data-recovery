@@ -10,21 +10,10 @@ namespace ZIF_data_recovery
 {
     public class DocumentManager
     {
-        //variables
+        // variables
         public string CurrentFile { get; set; }
 
         public FileBinary fileBinary { get; set; }
-
-        //public DocumentManager()
-        //{
-        //    // create Bitmap
-        //    createBitmap();
-        //}
-
-        //private void createBitmap()
-        //{
-        //    // To Do
-        //}
 
         /// <summary>
         /// This method opens the ZIF-file.

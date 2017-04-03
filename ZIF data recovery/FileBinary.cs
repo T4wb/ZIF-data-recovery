@@ -14,10 +14,6 @@ namespace ZIF_data_recovery
 
         public FileBinary(byte[] bytes)
         {
-            //
-            binary.Clear();
-
-            // split files
             SplitBinary(bytes);
         }
 
@@ -25,18 +21,18 @@ namespace ZIF_data_recovery
         {
             bool found = false;
             int startIndex = 0;
-            string stringToFound = "DATA";
-            byte testingbyte = Encoding.ASCII.GetBytes(stringToFound)[2];
+            string stringToFind = "DATA";
+            byte testingbyte = Encoding.ASCII.GetBytes(stringToFind)[2];
 
             while (!found)
             {
-                if (bytes[startIndex] == Encoding.ASCII.GetBytes(stringToFound)[0]) // refactor!
+                if (bytes[startIndex] == Encoding.ASCII.GetBytes(stringToFind)[0]) // refactor!
                 {
-                    if (bytes[startIndex+1] == Encoding.ASCII.GetBytes(stringToFound)[1])
+                    if (bytes[startIndex+1] == Encoding.ASCII.GetBytes(stringToFind)[1])
                     {
-                        if (bytes[startIndex+2] == Encoding.ASCII.GetBytes(stringToFound)[2])
+                        if (bytes[startIndex+2] == Encoding.ASCII.GetBytes(stringToFind)[2])
                         {
-                            if (bytes[startIndex+3] == Encoding.ASCII.GetBytes(stringToFound)[3])
+                            if (bytes[startIndex+3] == Encoding.ASCII.GetBytes(stringToFind)[3])
                             {
                                 startIndex += 7; // skips "DATA" and DATA-SIZE
                                 found = true;
@@ -44,6 +40,7 @@ namespace ZIF_data_recovery
                         }
                     }
                 }
+
                 startIndex++;
             }
 
