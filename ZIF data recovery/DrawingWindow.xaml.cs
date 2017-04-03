@@ -49,7 +49,7 @@ namespace ZIF_data_recovery
                         // zwart maken = 0
                         for (int j = 0; j < 4; j++)
                         {
-                            bytesPixelEditted.Add((byte)0);
+                            bytesPixelEditted.Add((byte)230);
                         }
                     }
                     else
