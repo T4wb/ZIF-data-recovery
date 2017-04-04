@@ -29,7 +29,12 @@ namespace ZIF_data_recovery
 
             if (dlg.ShowDialog() == true)
             {
-                
+
+                if (Path.GetExtension(dlg.FileName) != ".zif")
+                {
+                    return false;
+                }
+
                 CurrentFile = Path.GetFileName(dlg.FileName);
 
                 using (Stream stream = dlg.OpenFile())
