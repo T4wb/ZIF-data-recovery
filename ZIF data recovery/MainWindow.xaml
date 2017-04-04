@@ -5,11 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZIF_data_recovery"
         mc:Ignorable="d"
-        Title="MainWindow" Height="150" Width="300"
+        Title="ZIF Data Recovery" Height="120" Width="220"
         ResizeMode="CanMinimize">
     <Grid>
-        <Button x:Name="LoadFile" Content="Load File" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,10,0,0" Height="24" Click="OpenDocument"/>
-        <Button x:Name="ResetBoard" Content="Reset" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,71,0,0" Height="24" Click="ResetBoardClick"/>
-        <TextBox x:Name="Status" HorizontalAlignment="Left" Height="85" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="165" Margin="105,10,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110" />
+            <ColumnDefinition Width="110" />
+            <ColumnDefinition Width="110" />
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="btnLoadFile" Content="Load File" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Margin="7,0,0,0" Height="24" Click="OpenDocument" Grid.Row="0"/>
+        <Button x:Name="btnSaveFile" Content="Save File" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Margin="7,0,0,0" Height="24" Click="SaveDocument" Grid.Row="0" Grid.Column="1" IsEnabled="False"/>
+        <StatusBar HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Grid.Row="1" Grid.ColumnSpan="2" Width="214">
+            <TextBlock x:Name="Status" Text="Nothing has been loaded" TextWrapping="Wrap" FontSize="10"/>
+        </StatusBar>
     </Grid>
 </Window>

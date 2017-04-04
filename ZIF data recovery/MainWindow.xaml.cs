@@ -24,45 +24,70 @@ namespace ZIF_data_recovery
         private DocumentManager _documentManager;
         private DrawingWindow drawingWindow;
 
-
         public MainWindow()
         {
             InitializeComponent();
+
             _documentManager = new DocumentManager();
             drawingWindow = new DrawingWindow();
+
             drawingWindow.Show();
         }
 
         private void OpenDocument(object sender, RoutedEventArgs e)
         {
+            //
+            ResetBoard();
+
             if (_documentManager.OpenDocument())
             {
-                // Add status: File X loaded in Status Textbox: misschien een andere type control gebruiken?
-                
-                // Toon afbeelding:
-                RecoverDocument();
-                drawingWindow.SetDrawing();
+                Status.Text = _documentManager.CurrentFile + " has been loaded";
+
+                ShowDocument();
+
+                btnSaveFile.IsEnabled = true;
             }
             else
             {
-                // verander Status.Text in bestand niet geladen
-                MessageBox.Show("Ouch... I couldn't load the file. Is it in use or did you close the previous window?");
+                MessageBox.Show("Ouch... I couldn't load the file.\r\nIs it in use or did you close the previous window?");
             }
         }
 
-        private void ResetBoardClick(object sender, RoutedEventArgs e)
+        private void ResetBoard()
         {
+            // Reset Document
+            _documentManager.ResetDocument();
+
             // Reset Bitmap Drawingboard
+            drawingWindow.resetDrawBoard();
+
             // Reset Loaded Files
-            // Reset Status Textbox
+            Status.Text = "Nothing has been loaded.";
+
+            // Reset Save button
+            btnSaveFile.IsEnabled = false;
         }
 
-        private void RecoverDocument()
+        private void ShowDocument()
         {
-            if (!drawingWindow.RecoverDocument(_documentManager.fileBinary))
+            if (!drawingWindow.SetDrawing(_documentManager.fileBinary))
             {
-                MessageBox.Show("Ouch... I couldn't load the file. Is it in use or did you close the previous window?");
+                MessageBox.Show("Ouch... I couldn't recover the file :(."); // Doesn't work, yet
             }
+        }
+
+        private void SaveDocument(object sender, RoutedEventArgs e)
+        {
+            if (_documentManager.SaveDocument(drawingWindow.wbitmap))
+            {
+                MessageBox.Show("The image has been saved!");
+                ResetBoard();
+            }
+            else
+            {
+                MessageBox.Show("Ouch... I couldn't save the file.\r\nDid you close the window :') ?");
+            }
+            
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,58 +20,74 @@ namespace ZIF_data_recovery
     /// </summary>
     public partial class DrawingWindow : Window
     {
-        private WriteableBitmap _wbitmap;
+        // variables
+        int width = 800;
+        int height = 600;
+        int dpi = 96;
+
+        List<uint> pixels;
+        public WriteableBitmap wbitmap { get; set; }
 
         public DrawingWindow()
         {
             InitializeComponent();
-        }
-        public void SetDrawing()
-        {
-            //image.Source = bitmap;
+            pixels = new List<uint>();
+            wbitmap = new WriteableBitmap(width, height, dpi, dpi, PixelFormats.Bgra32, null);
         }
 
-        public bool RecoverDocument(FileBinary fileBinary)
+        /// <summary>
+        /// Sets DrawingBoard
+        /// </summary>
+        /// <param name="fileBinary"></param>
+        /// <returns>Returns statusvalue of drawing process</returns>
+        public bool SetDrawing(FileBinary fileBinary)
         {
-            // split into 4 bytes // Refactor: shift to FileBinary
-            byte[] bytesPixel = new byte[4]; // Refactor: other data structure as you're Array writing action costs speed!
+            //
+            resetDrawBoard();
 
-            int count = 0; // Refactor: use i%3 instead 
-            int Xcount = 0; // Refactor: this is i
-            int Ycount = 0;
+            // variables
+            byte[] bytesPixel = new byte[4];
+
+            int count = 0;
+            int red, green, blue, alpha;
+            red = green = blue = alpha = 0;
 
             for (int i = 0; i < fileBinary.binary[0].Length; i++)
             {
                 bytesPixel[count] = fileBinary.binary[0][i];
 
-                if (i != 0 && i % 4 == 0)
+                if (count != 0 && count % 3 == 0)
                 {
-                    // check
-                    if (BitConverter.ToInt32(bytesPixel, 0) != 0)
-                    {
-                        // SetPixel(Black)
-                    }
+                    blue = BitConverter.ToInt32(bytesPixel, 0) != 0
+                        ? 255 // zwarte pixel
+                        : 0; // witte pixel
 
-                    // x,y coordinate of pixel
-                    if (Xcount == 800 * 4) // Width
-                    {
-                        Ycount++; // May write out of bounce/picture as the max is 600
-                        Xcount = 0;
-                    }
-
-                    // 
+                    pixels.Add((uint)((blue << 24) + (green << 16) + (red << 8) + alpha));
                     count = 0;
                 }
-                Xcount++;
+                else { count++; }
             }
 
+            pixels.Add(pixels[0]);
+            //
+            DrawBoard();
             return true; // testing
         }
 
-        private void DrawPixel(int Xcount, int Ycount) // Refactor: shift to DrawPicture.cs
+        /// <summary>
+        /// Resets the Drawboard window.
+        /// </summary>
+        public void resetDrawBoard()
         {
-            // draw Bitmap
+            image.Source = null;
+            pixels.Clear();
+            wbitmap = new WriteableBitmap(width, height, dpi, dpi, PixelFormats.Bgra32, null);
         }
 
+        private void DrawBoard()
+        {
+            wbitmap.WritePixels(new Int32Rect(0, 0, width, 600), pixels.ToArray(), width * 4, 0);
+            image.Source = wbitmap;
+        }
     }
 }
