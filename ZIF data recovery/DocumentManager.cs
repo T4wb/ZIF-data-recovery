@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace ZIF_data_recovery
 {
@@ -44,6 +45,38 @@ namespace ZIF_data_recovery
             }
 
             return false; 
+        }
+
+        public bool SaveDocument(WriteableBitmap bitmap)
+        {
+            SaveFileDialog dlg = new SaveFileDialog()
+            {
+                Filter = "Portable Network Graphics | *.png"
+            };
+
+            if (dlg.ShowDialog() == true)
+            {
+                CurrentFile = dlg.FileName;
+
+                // save file
+                using (FileStream stream = new FileStream(CurrentFile, FileMode.Create))
+                {
+                    PngBitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(bitmap));
+                    encoder.Save(stream);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void ResetDocument()
+        {
+            // resets
+            fileBinary = null;
+            CurrentFile = null;
         }
     }
 }

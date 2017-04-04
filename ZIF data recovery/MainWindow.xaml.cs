@@ -27,32 +27,45 @@ namespace ZIF_data_recovery
         public MainWindow()
         {
             InitializeComponent();
+
             _documentManager = new DocumentManager();
             drawingWindow = new DrawingWindow();
+
             drawingWindow.Show();
         }
 
         private void OpenDocument(object sender, RoutedEventArgs e)
         {
+            //
+            ResetBoard();
+
             if (_documentManager.OpenDocument())
             {
-                Status.AppendText(_documentManager.CurrentFile + "\r\n");
+                Status.Text = _documentManager.CurrentFile + " has been loaded";
 
                 ShowDocument();
+
+                btnSaveFile.IsEnabled = true;
             }
             else
             {
-                MessageBox.Show("Ouch... I couldn't load the file. Is it in use or did you close the previous window?");
+                MessageBox.Show("Ouch... I couldn't load the file.\r\nIs it in use or did you close the previous window?");
             }
         }
 
-        private void ResetBoardClick(object sender, RoutedEventArgs e)
+        private void ResetBoard()
         {
+            // Reset Document
+            _documentManager.ResetDocument();
+
             // Reset Bitmap Drawingboard
             drawingWindow.resetDrawBoard();
 
             // Reset Loaded Files
-            Status.Clear();
+            Status.Text = "Nothing has been loaded.";
+
+            // Reset Save button
+            btnSaveFile.IsEnabled = false;
         }
 
         private void ShowDocument()
@@ -61,6 +74,20 @@ namespace ZIF_data_recovery
             {
                 MessageBox.Show("Ouch... I couldn't recover the file :(."); // Doesn't work, yet
             }
+        }
+
+        private void SaveDocument(object sender, RoutedEventArgs e)
+        {
+            if (_documentManager.SaveDocument(drawingWindow.wbitmap))
+            {
+                MessageBox.Show("The image has been saved!");
+                ResetBoard();
+            }
+            else
+            {
+                MessageBox.Show("Ouch... I couldn't save the file.\r\nDid you close the window :') ?");
+            }
+            
         }
     }
 }

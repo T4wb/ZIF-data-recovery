@@ -26,13 +26,13 @@ namespace ZIF_data_recovery
         int dpi = 96;
 
         List<uint> pixels;
-        WriteableBitmap bitmap;
+        public WriteableBitmap wbitmap { get; set; }
 
         public DrawingWindow()
         {
             InitializeComponent();
             pixels = new List<uint>();
-            bitmap = new WriteableBitmap(width, height, dpi, dpi, PixelFormats.Bgra32, null);
+            wbitmap = new WriteableBitmap(width, height, dpi, dpi, PixelFormats.Bgra32, null);
         }
 
         /// <summary>
@@ -42,6 +42,9 @@ namespace ZIF_data_recovery
         /// <returns>Returns statusvalue of drawing process</returns>
         public bool SetDrawing(FileBinary fileBinary)
         {
+            //
+            resetDrawBoard();
+
             // variables
             byte[] bytesPixel = new byte[4];
 
@@ -65,25 +68,26 @@ namespace ZIF_data_recovery
                 else { count++; }
             }
 
+            pixels.Add(pixels[0]);
             //
             DrawBoard();
             return true; // testing
         }
 
         /// <summary>
-        /// Resets Drawboard
+        /// Resets the Drawboard window.
         /// </summary>
         public void resetDrawBoard()
         {
             image.Source = null;
             pixels.Clear();
-            bitmap = new WriteableBitmap(width, height, dpi, dpi, PixelFormats.Bgra32, null);
+            wbitmap = new WriteableBitmap(width, height, dpi, dpi, PixelFormats.Bgra32, null);
         }
 
         private void DrawBoard()
         {
-            bitmap.WritePixels(new Int32Rect(0, 0, 800, 600), pixels.ToArray(), width * 4, 0);
-            image.Source = bitmap;
+            wbitmap.WritePixels(new Int32Rect(0, 0, width, 600), pixels.ToArray(), width * 4, 0);
+            image.Source = wbitmap;
         }
     }
 }

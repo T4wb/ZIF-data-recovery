@@ -5,21 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZIF_data_recovery"
         mc:Ignorable="d"
-        Title="MainWindow" Height="160" Width="230"
+        Title="ZIF Data Recovery" Height="120" Width="220"
         ResizeMode="CanMinimize">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="90" />
-            <ColumnDefinition Width="150" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="65" />
-            <RowDefinition Height="65" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110" />
+            <ColumnDefinition Width="110" />
+            <ColumnDefinition Width="110" />
+        </Grid.ColumnDefinitions>
 
-        <Button x:Name="LoadFile" Content="Load File" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Margin="7,0,0,0" Height="24" Click="OpenDocument" Grid.Column="0" Grid.Row="0"/>
-        <Button x:Name="ResetBoard" Content="Reset" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Margin="7,0,0,0" Height="24" Click="ResetBoardClick" Grid.Column="0" Grid.Row="1"/>
-        <Label x:Name="label" Content="Loaded" HorizontalAlignment="Left" Margin="5.4,0,0,39.6" Height="26" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0"/>
-        <TextBox x:Name="Status" HorizontalAlignment="Left" Height="86" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100" Margin="10.4,24,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Grid.Column="1" Grid.RowSpan="2"/>
+        <Button x:Name="btnLoadFile" Content="Load File" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Margin="7,0,0,0" Height="24" Click="OpenDocument" Grid.Row="0"/>
+        <Button x:Name="btnSaveFile" Content="Save File" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Margin="7,0,0,0" Height="24" Click="SaveDocument" Grid.Row="0" Grid.Column="1" IsEnabled="False"/>
+        <StatusBar HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Grid.Row="1" Grid.ColumnSpan="2" Width="214">
+            <TextBlock x:Name="Status" Text="Nothing has been loaded" TextWrapping="Wrap" FontSize="10"/>
+        </StatusBar>
     </Grid>
 </Window>
